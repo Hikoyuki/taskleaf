@@ -31,5 +31,5 @@ i18nの辞書ファイル
 
  vi config/initializers/local.rb
 
- Rails.application.i18n.default.local = :ja
+Rails.application.config.i18n.default_locale = :ja↵
 ```
