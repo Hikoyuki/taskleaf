@@ -6,6 +6,7 @@ application up and running.
 Things you may want to cover:
 
 * Ruby version
+2.7.1
 
 * System dependencies
 
@@ -23,3 +24,12 @@ Things you may want to cover:
 
 * ...
 # taskleaf
+
+i18nの辞書ファイル
+```
+ wget https://raw.githubusercontent.com/svenfuchs/rails-i18n/master/rails/locale/ja.yml -P config/locales
+
+ vi config/initializers/local.rb
+
+ Rails.application.i18n.default.local = :ja
+```
