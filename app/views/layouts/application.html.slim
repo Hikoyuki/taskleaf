@@ -1,0 +1,18 @@
+doctype html
+html
+  head
+    title
+      | Taskleaf
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  body
+    /#bootstrapを有効にする設定
+    .app-title.navbar.navbar-expand-md.navbar-light.bg-light
+      .navbar-brand Tadkleaf
+    .container
+      /#flashメッセージを表示させる設定
+      - if flash.notice.present?
+        .alert.alert-success= flash.notice
+    = yield
