@@ -1,4 +1,8 @@
 class Admin::UsersController < ApplicationController
+  # 管理者権限を持つユーザーだけがユーザー管理機能を利用できるようにする
+  # 管理者以外の利用を禁止するフィルタとしてrequire_adminメソッドを追加
+  before_action :require_admin
+
   def index
     @users = User.all
   end
@@ -47,5 +51,12 @@ class Admin::UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :email, :admin, :password, :password_confirmation)
+  end
+
+  def require_admin
+    redirect_to root_url unless current_user.admin?
+    # /admin/usersのパスに何かしらアクションがあることがわかる
+    # 管理機能の存在自体を隠すのであれば、アクションが存在しない時と同じようにHTTPSステータスコード404を返すコードを書くのも良い
+    # 最初のユーザーはRailsコンソールで作る必要がある もしくはseedを利用
   end
 end

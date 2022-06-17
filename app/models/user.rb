@@ -8,4 +8,6 @@ class User < ApplicationRecord
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
+
+  has_many :tasks # user.tasks といったメソッド関連(Assosiation)で紐づくTaskオブジェクト一覧を取得可能に
 end

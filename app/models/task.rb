@@ -10,6 +10,8 @@ class Task < ApplicationRecord
   # 検証前の正規化 コールバック処理で「名前なし」を自動でつける例
   # before_validation :set_nameless_name
 
+  belongs_to :user # task.userで紐づいたオブジェクトを取得可能に
+
   private
 
   # 検証メソッドの基本的は仕事「検証エラーを発見したら、errorsにエラー内容を格納する」
