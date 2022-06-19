@@ -11,8 +11,17 @@ html
     /#bootstrapを有効にする設定
     .app-title.navbar.navbar-expand-md.navbar-light.bg-light
       .navbar-brand Tadkleaf
+
+      ul.navbar-nav.ml-auto
+        - if current_user # ヘルパー定義のcurrent_userメソッド
+          li.nav-item= link_to 'タスク一覧', tasks_path, class: 'nav-link'
+          - if current_user.admin? # 管理権限を持つかどうかは、Userオブジェクトを持つadmin?メソッドで問い合わせることが可能 持ってる場合trueを返す
+            li.nav-item= link_to 'ユーザー一覧', admin_users_path, class: 'nav-link'
+          li.nav-item= link_to 'ログアウト', logout_path, method: :delete, class: 'nav-link'
+        - else
+          li.nav-item= link_to 'ログイン', login_path, class: 'nav-link'
     .container
       /#flashメッセージを表示させる設定
       - if flash.notice.present?
         .alert.alert-success= flash.notice
-    = yield
+      = yield

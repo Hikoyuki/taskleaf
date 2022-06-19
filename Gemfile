@@ -24,8 +24,8 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+# Use ActiveModel has_secure_password パスワードのハッシュ化
+gem 'bcrypt', '~> 3.1.7'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
@@ -61,6 +61,11 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
+# slimのジェネレータを提供
 gem 'slim-rails'
+# ERB形式をslimに変換してくれるerb2slimコマンドを提供
 gem 'html2slim'
+# フロントエンドフレームワーク
 gem 'bootstrap'
+# URL部分をリンクにする x20倍早いと謳っているrinkuというgemもある
+gem'rails_autolink'
