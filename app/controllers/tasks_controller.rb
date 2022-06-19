@@ -1,16 +1,26 @@
 class TasksController < ApplicationController
+  # @task = Task.find(params[:id]) の部分が複数あるので、フィルタを使ってDRYにする
+  before_action :set_task, only: [:show, :edit, :update, :destroy]
+
   def index
     #@tasks = Task.all
 
     # ログインしているユーザーに紐づくTaskだけ表示する
-    @tasks = current_user.tasks.order(created_at: :desc) # 作成日時の新しい順に検索する
+    # @tasks = current_user.tasks.order(created_at: :desc) # 作成日時の新しい順に検索する
     # @tasks = Task.where(user_id: current_user.id)と同じ結果
+
+    # Rails consoleで User.where(:admin: true).to_sql 生成予定のSQL見れる
+
+    # scopeを使って次のように書ける
+    @tasks = current_user.tasks.recent
   end
 
   def show
     # @task = Task.find(params[:id])
     # このままだとユーザーが適当に「/tasks/32」と打ち込んだら見れてしまう
-    @task = current_user.tasks.find(params[:id]) # current_user付与で、他のユーザーのデータを見ようとしてもはねつけられる
+    # @task = current_user.tasks.find(params[:id]) # current_user付与で、他のユーザーのデータを見ようとしてもはねつけられる
+
+    # DRYをフィルタで実施したbefore_actionのため省略できる
   end
 
   def new
@@ -50,23 +60,34 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = Task.find(params[:id])
+    # @task = Task.find(params[:id])
+    # @task = current_user.tasks.find(params[:id])
+    # DRYをフィルタで実施したbefore_actionのため省略できる
   end
 
   def update
-    task = Task.find(params[:id])
-    task.update!(task_params)
-    redirect_to tasks_url, notice: "タスク「#{task.name}」を更新しました"
+    # task = Task.find(params[:id])
+    # @task = current_user.tasks.find(params[:id])
+    # DRYをフィルタで実施したbefore_actionのため省略できる
+    @task.update!(task_params) # 代入先がローカル変数だったので、edit,showに合わせてインスタンス変数に変更
+    redirect_to tasks_url, notice: "タスク「#{@task.name}」を更新しました" # 同じくインスタンス変数に変更
   end
 
   def destroy
-    task = Task.find(params[:id])
-    task.destroy
-    redirect_to tasks_url, notice: "タスク「#{task.name}」を削除しました。"
+    # task = Task.find(params[:id])
+    # @task = current_user.tasks.find(params[:id])
+    # DRYをフィルタで実施したbefore_actionのため省略できる
+    @task.destroy # 代入先がローカル変数だったので、edit,showに合わせてインスタンス変数に変更
+    redirect_to tasks_url, notice: "タスク「#{@task.name}」を削除しました。" # 同じくインスタンス変数に変更
   end
 
   private
+
   def task_params
     params.require(:task).permit(:name, :description)
+  end
+
+  def set_task
+    @task = current_user.tasks.find(params[:id])
   end
 end

@@ -12,6 +12,8 @@ class Task < ApplicationRecord
 
   belongs_to :user # task.userで紐づいたオブジェクトを取得可能に
 
+  scope :recent, -> { order(created_at: :desc) }
+
   private
 
   # 検証メソッドの基本的は仕事「検証エラーを発見したら、errorsにエラー内容を格納する」

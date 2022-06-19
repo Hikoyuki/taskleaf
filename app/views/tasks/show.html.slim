@@ -12,8 +12,10 @@ table.table.table-hover
       td= @task.name
     tr
       th= Task.human_attribute_name(:description)
-      /#改行コードをRailsでいい感じに<br>タグで整えてくれるメソッド
-      td= simple_format(h(@task.description), {}, sanitize: false, wrapper_tag: "div")
+      /#改行コードをRailsでいい感じに<br>タグで整えてくれるsimple_formatメソッド
+      /#td= simple_format(h(@task.description), {}, sanitize: false, wrapper_tag: "div")
+      /#URLをリンクとして表示できるようにする
+      td= auto_link(simple_format(h(@task.description), {}, sanitize: false, wrapper_tag: "div"))
     tr
       th= Task.human_attribute_name(:created_at)
       td= @task.created_at
