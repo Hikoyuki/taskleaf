@@ -1,4 +1,5 @@
 class Admin::UsersController < ApplicationController
+  # r g controller Admin::Users new edit show index
   # 管理者権限を持つユーザーだけがユーザー管理機能を利用できるようにする
   # 管理者以外の利用を禁止するフィルタとしてrequire_adminメソッドを追加
   before_action :require_admin
